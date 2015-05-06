@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'javax.servlet:servlet-api:2.5',
+            'javax.servlet.jsp:jsp-api:2.1'
+    runtime 'javax.servlet:jstl:1.1.2',
+            'taglibs:standard:1.1.2'
+}
+
+/*
+The combined tasks supported
+ 
+:compileJava
+:processResources UP-TO-DATE
+:classes
+:war
+:assemble
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test
+:check
+:build
+:jettyRun
+*/
+
+//To customize the web server path and port
+
+jettyRun {
+    httpPort = 9090
+    contextPath = 'todo'
+}
+
+//To customize the web dir path
+/*
+webAppDirName = 'webfiles'
+
+war {
+    from 'static'
+}
+*/
+
