@@ -21,6 +21,7 @@ public class ToDoServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String servletPath = request.getServletPath();
+        System.out.println("ToDoServlet.service()");
         String view = processRequest(servletPath, request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(view);
         dispatcher.forward(request, response);
