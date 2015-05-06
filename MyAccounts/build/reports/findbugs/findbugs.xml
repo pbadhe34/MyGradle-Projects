@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1" sequence="0" timestamp="1429475887530" analysisTimestamp="1429475887553" release="">
+  <Project projectName="">
+    <Jar>D:\Eclipse-Repositories\MyAccounts\bin</Jar>
+  </Project>
+  <BugInstance type="EQ_SELF_USE_OBJECT" priority="2" rank="8" abbrev="Eq" category="CORRECTNESS" instanceHash="a5fb7586a2af0622fdb3162d2b000f73" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Covariant equals() method defined, Object.equals(Object) inherited</ShortMessage>
+    <LongMessage>com.bank.Account defines equals(Account) method and uses Object.equals(Object)</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Method classname="com.bank.Account" name="equals" signature="(Lcom/bank/Account;)Z" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" start="42" end="57" startBytecode="0" endBytecode="223" sourcefile="Account.java" sourcepath="com/bank/Account.java"/>
+      <Message>In method com.bank.Account.equals(Account)</Message>
+    </Method>
+    <SourceLine classname="com.bank.Account" start="42" end="57" startBytecode="0" endBytecode="223" sourcefile="Account.java" sourcepath="com/bank/Account.java" synthetic="true">
+      <Message>At Account.java:[lines 42-57]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="HE_EQUALS_USE_HASHCODE" priority="2" rank="16" abbrev="HE" category="BAD_PRACTICE" instanceHash="52738327e2d74ffcdfae2efad5a1ccc6" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class defines equals() and uses Object.hashCode()</ShortMessage>
+    <LongMessage>com.bank.Account defines equals and uses Object.hashCode()</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Method classname="com.bank.Account" name="equals" signature="(Lcom/bank/Account;)Z" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" start="42" end="57" startBytecode="0" endBytecode="223" sourcefile="Account.java" sourcepath="com/bank/Account.java" synthetic="true"/>
+      <Message>In method com.bank.Account.equals(Account)</Message>
+    </Method>
+    <SourceLine classname="com.bank.Account" start="42" end="57" startBytecode="0" endBytecode="223" sourcefile="Account.java" sourcepath="com/bank/Account.java" synthetic="true">
+      <Message>At Account.java:[lines 42-57]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NP_ALWAYS_NULL" priority="1" rank="5" abbrev="NP" category="CORRECTNESS" instanceHash="5e091d3a19616e35054370c882289b7b" instanceOccurrenceNum="0" instanceOccurrenceMax="0" cweid="476">
+    <ShortMessage>Null pointer dereference</ShortMessage>
+    <LongMessage>Null pointer dereference of obj in com.bank.Account.main(String[])</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Method classname="com.bank.Account" name="main" signature="([Ljava/lang/String;)V" isStatic="true" primary="true">
+      <SourceLine classname="com.bank.Account" start="70" end="73" startBytecode="0" endBytecode="84" sourcefile="Account.java" sourcepath="com/bank/Account.java"/>
+      <Message>In method com.bank.Account.main(String[])</Message>
+    </Method>
+    <LocalVariable name="obj" register="1" pc="13" role="LOCAL_VARIABLE_VALUE_OF">
+      <Message>Value loaded from obj</Message>
+    </LocalVariable>
+    <SourceLine classname="com.bank.Account" primary="true" start="72" end="72" startBytecode="14" endBytecode="14" sourcefile="Account.java" sourcepath="com/bank/Account.java" role="SOURCE_LINE_DEREF">
+      <Message>Dereferenced at Account.java:[line 72]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED" priority="1" rank="3" abbrev="RV" category="CORRECTNESS" instanceHash="390777734a4f39c6cb55a598c4485dba" instanceOccurrenceNum="0" instanceOccurrenceMax="0" cweid="440">
+    <ShortMessage>Method ignores return value</ShortMessage>
+    <LongMessage>Return value of String.concat(String) ignored in new com.bank.Account(String)</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Method classname="com.bank.Account" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" start="12" end="14" startBytecode="0" endBytecode="73" sourcefile="Account.java" sourcepath="com/bank/Account.java"/>
+      <Message>In method new com.bank.Account(String)</Message>
+    </Method>
+    <Method classname="java.lang.String" name="concat" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.String" start="2014" end="2021" startBytecode="0" endBytecode="106" sourcefile="String.java" sourcepath="java/lang/String.java"/>
+      <Message>Called method String.concat(String)</Message>
+    </Method>
+    <SourceLine classname="com.bank.Account" primary="true" start="13" end="13" startBytecode="9" endBytecode="9" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+      <Message>At Account.java:[line 13]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED" priority="1" rank="3" abbrev="RV" category="CORRECTNESS" instanceHash="74cfa977c38fdede6113c7bb4e14c0d8" instanceOccurrenceNum="0" instanceOccurrenceMax="0" cweid="440">
+    <ShortMessage>Method ignores return value</ShortMessage>
+    <LongMessage>Return value of String.replace(CharSequence, CharSequence) ignored in com.bank.Account.replaceName(String)</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Method classname="com.bank.Account" name="replaceName" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" start="82" end="83" startBytecode="0" endBytecode="73" sourcefile="Account.java" sourcepath="com/bank/Account.java"/>
+      <Message>In method com.bank.Account.replaceName(String)</Message>
+    </Method>
+    <Method classname="java.lang.String" name="replace" signature="(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.String" start="2226" end="2227" startBytecode="0" endBytecode="55" sourcefile="String.java" sourcepath="java/lang/String.java"/>
+      <Message>Called method String.replace(CharSequence, CharSequence)</Message>
+    </Method>
+    <SourceLine classname="com.bank.Account" primary="true" start="82" end="82" startBytecode="9" endBytecode="9" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+      <Message>At Account.java:[line 82]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="UR_UNINIT_READ" priority="2" rank="3" abbrev="UR" category="CORRECTNESS" instanceHash="dad363f7ffb8919c21d45f93a19892bc" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Uninitialized read of field in constructor</ShortMessage>
+    <LongMessage>Uninitialized read of name in new com.bank.Account(String)</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Method classname="com.bank.Account" name="&lt;init&gt;" signature="(Ljava/lang/String;)V" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" start="12" end="14" startBytecode="0" endBytecode="73" sourcefile="Account.java" sourcepath="com/bank/Account.java"/>
+      <Message>In method new com.bank.Account(String)</Message>
+    </Method>
+    <Field classname="com.bank.Account" name="name" signature="Ljava/lang/String;" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>In Account.java</Message>
+      </SourceLine>
+      <Message>Field com.bank.Account.name</Message>
+    </Field>
+    <SourceLine classname="com.bank.Account" primary="true" start="13" end="13" startBytecode="5" endBytecode="5" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+      <Message>At Account.java:[line 13]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_FIELD" priority="2" rank="18" abbrev="UuF" category="PERFORMANCE" instanceHash="71cc185074376825232bf442ba252368" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Unused field</ShortMessage>
+    <LongMessage>Unused field: com.bank.Account.branchName</LongMessage>
+    <Class classname="com.bank.Account" primary="true">
+      <SourceLine classname="com.bank.Account" start="7" end="87" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>At Account.java:[lines 7-87]</Message>
+      </SourceLine>
+      <Message>In class com.bank.Account</Message>
+    </Class>
+    <Field classname="com.bank.Account" name="branchName" signature="Ljava/lang/String;" isStatic="false" primary="true">
+      <SourceLine classname="com.bank.Account" sourcefile="Account.java" sourcepath="com/bank/Account.java">
+        <Message>In Account.java</Message>
+      </SourceLine>
+      <Message>Field com.bank.Account.branchName</Message>
+    </Field>
+    <SourceLine classname="com.bank.Account" sourcefile="Account.java" sourcepath="com/bank/Account.java" synthetic="true">
+      <Message>In Account.java</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED" priority="1" rank="3" abbrev="RV" category="CORRECTNESS" instanceHash="4715ffa3e8eedb46ca840e27883ab02" instanceOccurrenceNum="0" instanceOccurrenceMax="0" cweid="440">
+    <ShortMessage>Method ignores return value</ShortMessage>
+    <LongMessage>Return value of String.substring(int) ignored in com.company.HelloWorld.getSearchString(String)</LongMessage>
+    <Class classname="com.company.HelloWorld" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="3" end="28" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+        <Message>At HelloWorld.java:[lines 3-28]</Message>
+      </SourceLine>
+      <Message>In class com.company.HelloWorld</Message>
+    </Class>
+    <Method classname="com.company.HelloWorld" name="getSearchString" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="12" end="14" startBytecode="0" endBytecode="75" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java"/>
+      <Message>In method com.company.HelloWorld.getSearchString(String)</Message>
+    </Method>
+    <Method classname="java.lang.String" name="substring" signature="(I)Ljava/lang/String;" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.String" start="1913" end="1920" startBytecode="0" endBytecode="117" sourcefile="String.java" sourcepath="java/lang/String.java"/>
+      <Message>Called method String.substring(int)</Message>
+    </Method>
+    <SourceLine classname="com.company.HelloWorld" primary="true" start="13" end="13" startBytecode="10" endBytecode="10" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+      <Message>At HelloWorld.java:[line 13]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED" priority="1" rank="3" abbrev="RV" category="CORRECTNESS" instanceHash="7f047dd43f77ac0f4bc0165a87be8f29" instanceOccurrenceNum="0" instanceOccurrenceMax="0" cweid="440">
+    <ShortMessage>Method ignores return value</ShortMessage>
+    <LongMessage>Return value of String.substring(int) ignored in com.company.HelloWorld.testNewCode()</LongMessage>
+    <Class classname="com.company.HelloWorld" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="3" end="28" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+        <Message>At HelloWorld.java:[lines 3-28]</Message>
+      </SourceLine>
+      <Message>In class com.company.HelloWorld</Message>
+    </Class>
+    <Method classname="com.company.HelloWorld" name="testNewCode" signature="()V" isStatic="false" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="24" end="28" startBytecode="0" endBytecode="81" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java"/>
+      <Message>In method com.company.HelloWorld.testNewCode()</Message>
+    </Method>
+    <Method classname="java.lang.String" name="substring" signature="(I)Ljava/lang/String;" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.String" start="1913" end="1920" startBytecode="0" endBytecode="117" sourcefile="String.java" sourcepath="java/lang/String.java"/>
+      <Message>Called method String.substring(int)</Message>
+    </Method>
+    <SourceLine classname="com.company.HelloWorld" primary="true" start="26" end="26" startBytecode="13" endBytecode="13" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+      <Message>At HelloWorld.java:[line 26]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" priority="2" rank="17" abbrev="RV" category="STYLE" instanceHash="d772a776df04fed05197af69eb313286" instanceOccurrenceNum="0" instanceOccurrenceMax="0" cweid="440">
+    <ShortMessage>Return value of method without side effect is ignored</ShortMessage>
+    <LongMessage>Return value of sayHello() ignored, but method has no side effect</LongMessage>
+    <Class classname="com.company.HelloWorld" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="3" end="28" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+        <Message>At HelloWorld.java:[lines 3-28]</Message>
+      </SourceLine>
+      <Message>In class com.company.HelloWorld</Message>
+    </Class>
+    <Method classname="com.company.HelloWorld" name="main" signature="([Ljava/lang/String;)V" isStatic="true" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="19" end="21" startBytecode="0" endBytecode="73" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java"/>
+      <Message>In method com.company.HelloWorld.main(String[])</Message>
+    </Method>
+    <Method classname="com.company.HelloWorld" name="sayHello" signature="()Ljava/lang/String;" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="com.company.HelloWorld" start="7" end="7" startBytecode="0" endBytecode="44" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java"/>
+      <Message>Called method com.company.HelloWorld.sayHello()</Message>
+    </Method>
+    <SourceLine classname="com.company.HelloWorld" primary="true" start="20" end="20" startBytecode="9" endBytecode="9" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+      <Message>At HelloWorld.java:[line 20]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_FIELD" priority="2" rank="18" abbrev="UuF" category="PERFORMANCE" instanceHash="73d29e202ca7e5622adacb6ff281de5c" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Unused field</ShortMessage>
+    <LongMessage>Unused field: com.company.HelloWorld.num</LongMessage>
+    <Class classname="com.company.HelloWorld" primary="true">
+      <SourceLine classname="com.company.HelloWorld" start="3" end="28" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+        <Message>At HelloWorld.java:[lines 3-28]</Message>
+      </SourceLine>
+      <Message>In class com.company.HelloWorld</Message>
+    </Class>
+    <Field classname="com.company.HelloWorld" name="num" signature="I" isStatic="false" primary="true">
+      <SourceLine classname="com.company.HelloWorld" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java">
+        <Message>In HelloWorld.java</Message>
+      </SourceLine>
+      <Message>Field com.company.HelloWorld.num</Message>
+    </Field>
+    <SourceLine classname="com.company.HelloWorld" sourcefile="HelloWorld.java" sourcepath="com/company/HelloWorld.java" synthetic="true">
+      <Message>In HelloWorld.java</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_METHOD_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="cbe7f9712658d79bd8084e5699fcb16" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Method names should start with a lower case letter</ShortMessage>
+    <LongMessage>The method name test.com.bank.AppTest4.AppCheck() doesn&apos;t start with a lower case letter</LongMessage>
+    <Class classname="test.com.bank.AppTest4" primary="true">
+      <SourceLine classname="test.com.bank.AppTest4" start="10" end="20" sourcefile="AppTest4.java" sourcepath="test/com/bank/AppTest4.java">
+        <Message>At AppTest4.java:[lines 10-20]</Message>
+      </SourceLine>
+      <Message>In class test.com.bank.AppTest4</Message>
+    </Class>
+    <Method classname="test.com.bank.AppTest4" name="AppCheck" signature="()V" isStatic="false" primary="true">
+      <SourceLine classname="test.com.bank.AppTest4" start="17" end="20" startBytecode="0" endBytecode="83" sourcefile="AppTest4.java" sourcepath="test/com/bank/AppTest4.java"/>
+      <Message>In method test.com.bank.AppTest4.AppCheck()</Message>
+    </Method>
+    <SourceLine classname="test.com.bank.AppTest4" start="17" end="20" startBytecode="0" endBytecode="83" sourcefile="AppTest4.java" sourcepath="test/com/bank/AppTest4.java" synthetic="true">
+      <Message>At AppTest4.java:[lines 17-20]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugCategory category="BAD_PRACTICE">
+    <Description>Bad practice</Description>
+  </BugCategory>
+  <BugCategory category="CORRECTNESS">
+    <Description>Correctness</Description>
+  </BugCategory>
+  <BugCategory category="PERFORMANCE">
+    <Description>Performance</Description>
+  </BugCategory>
+  <BugCategory category="STYLE">
+    <Description>Dodgy code</Description>
+  </BugCategory>
+  <BugPattern type="NP_ALWAYS_NULL" abbrev="NP" category="CORRECTNESS">
+    <ShortDescription>Null pointer dereference</ShortDescription>
+    <Details><![CDATA[
+
+<p> A null pointer is dereferenced here.&nbsp; This will lead to a
+<code>NullPointerException</code> when the code is executed.</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="RV_RETURN_VALUE_IGNORED" abbrev="RV" category="CORRECTNESS">
+    <ShortDescription>Method ignores return value</ShortDescription>
+    <Details><![CDATA[
+
+   <p> The return value of this method should be checked. One common
+cause of this warning is to invoke a method on an immutable object,
+thinking that it updates the object. For example, in the following code
+fragment,</p>
+<blockquote>
+<pre>
+String dateString = getHeaderField(name);
+dateString.trim();
+</pre>
+</blockquote>
+<p>the programmer seems to be thinking that the trim() method will update
+the String referenced by dateString. But since Strings are immutable, the trim()
+function returns a new String value, which is being ignored here. The code
+should be corrected to: </p>
+<blockquote>
+<pre>
+String dateString = getHeaderField(name);
+dateString = dateString.trim();
+</pre>
+</blockquote>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT" abbrev="RV" category="STYLE">
+    <ShortDescription>Return value of method without side effect is ignored</ShortDescription>
+    <Details><![CDATA[
+
+<p>This code calls a method and ignores the return value. However our analysis shows that
+the method (including its implementations in subclasses if any) does not produce any effect 
+other than return value. Thus this call can be removed.
+</p>
+<p>We are trying to reduce the false positives as much as possible, but in some cases this warning might be wrong.
+Common false-positive cases include:</p>
+<p>- The method is designed to be overridden and produce a side effect in other projects which are out of the scope of the analysis.</p>
+<p>- The method is called to trigger the class loading which may have a side effect.</p>
+<p>- The method is called just to get some exception.</p>
+<p>If you feel that our assumption is incorrect, you can use a @CheckReturnValue annotation
+to instruct FindBugs that ignoring the return value of this method is acceptable.
+</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="UUF_UNUSED_FIELD" abbrev="UuF" category="PERFORMANCE">
+    <ShortDescription>Unused field</ShortDescription>
+    <Details><![CDATA[
+
+  <p> This field is never used.&nbsp; Consider removing it from the class.</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="NM_METHOD_NAMING_CONVENTION" abbrev="Nm" category="BAD_PRACTICE">
+    <ShortDescription>Method names should start with a lower case letter</ShortDescription>
+    <Details><![CDATA[
+
+  <p>
+Methods should be verbs, in mixed case with the first letter lowercase, with the first letter of each internal word capitalized.
+</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="EQ_SELF_USE_OBJECT" abbrev="Eq" category="CORRECTNESS">
+    <ShortDescription>Covariant equals() method defined, Object.equals(Object) inherited</ShortDescription>
+    <Details><![CDATA[
+
+  <p> This class defines a covariant version of the <code>equals()</code>
+  method, but inherits the normal <code>equals(Object)</code> method
+  defined in the base <code>java.lang.Object</code> class.&nbsp;
+  The class should probably define a <code>boolean equals(Object)</code> method.
+  </p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="HE_EQUALS_USE_HASHCODE" abbrev="HE" category="BAD_PRACTICE">
+    <ShortDescription>Class defines equals() and uses Object.hashCode()</ShortDescription>
+    <Details><![CDATA[
+
+  <p> This class overrides <code>equals(Object)</code>, but does not
+  override <code>hashCode()</code>, and inherits the implementation of
+  <code>hashCode()</code> from <code>java.lang.Object</code> (which returns
+  the identity hash code, an arbitrary value assigned to the object
+  by the VM).&nbsp; Therefore, the class is very likely to violate the
+  invariant that equal objects must have equal hashcodes.</p>
+
+<p>If you don't think instances of this class will ever be inserted into a HashMap/HashTable,
+the recommended <code>hashCode</code> implementation to use is:</p>
+<pre>public int hashCode() {
+  assert false : "hashCode not designed";
+  return 42; // any arbitrary constant will do
+  }</pre>
+
+    ]]></Details>
+  </BugPattern>
+  <BugPattern type="UR_UNINIT_READ" abbrev="UR" category="CORRECTNESS">
+    <ShortDescription>Uninitialized read of field in constructor</ShortDescription>
+    <Details><![CDATA[
+
+  <p> This constructor reads a field which has not yet been assigned a value.&nbsp;
+  This is often caused when the programmer mistakenly uses the field instead
+  of one of the constructor's parameters.</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugCode abbrev="NP" cweid="476">
+    <Description>Null pointer dereference</Description>
+  </BugCode>
+  <BugCode abbrev="RV" cweid="440">
+    <Description>Bad use of return value from method</Description>
+  </BugCode>
+  <BugCode abbrev="UuF">
+    <Description>Unused field</Description>
+  </BugCode>
+  <BugCode abbrev="Eq">
+    <Description>Problems with implementation of equals()</Description>
+  </BugCode>
+  <BugCode abbrev="HE">
+    <Description>Equal objects must have equal hashcodes</Description>
+  </BugCode>
+  <BugCode abbrev="UR">
+    <Description>Uninitialized read of field in constructor</Description>
+  </BugCode>
+  <BugCode abbrev="Nm">
+    <Description>Confusing method name</Description>
+  </BugCode>
+  <Errors errors="0" missingClasses="5">
+    <MissingClass>junit.framework.Assert</MissingClass>
+    <MissingClass>junit.framework.TestCase</MissingClass>
+    <MissingClass>junit.framework.TestSuite</MissingClass>
+    <MissingClass>junit.textui.TestRunner</MissingClass>
+    <MissingClass>org.junit.Assert</MissingClass>
+  </Errors>
+  <FindBugsSummary timestamp="Mon, 20 Apr 2015 02:08:07 +0530" total_classes="11" referenced_classes="25" total_bugs="12" total_size="195" num_packages="3" java_version="1.8.0_25" vm_version="25.25-b02" cpu_seconds="14.24" clock_seconds="5.44" peak_mbytes="111.43" alloc_mbytes="880.00" gc_seconds="0.29" priority_2="7" priority_1="5">
+    <FileStats path="com/bank/Account.java" bugCount="7" size="57" bugHash="ef47db514fc9e9cbdbf7eb69181783af"/>
+    <FileStats path="com/bank/Manager.java" bugCount="0" size="6"/>
+    <FileStats path="com/company/HelloWorld.java" bugCount="4" size="19" bugHash="31c2e3661349fd1e7085c9a53abeedef"/>
+    <FileStats path="test/com/bank/AccountTest.java" bugCount="0" size="28"/>
+    <FileStats path="test/com/bank/AllJUnitTests.java" bugCount="0" size="9"/>
+    <FileStats path="test/com/bank/AppTest.java" bugCount="0" size="18"/>
+    <FileStats path="test/com/bank/AppTest4.java" bugCount="1" size="8" bugHash="869032bc54d4e20aa2916b5d00cad6a9"/>
+    <FileStats path="test/com/bank/HelloWorldTest.java" bugCount="0" size="21"/>
+    <FileStats path="test/com/bank/Junit4TestSuite.java" bugCount="0" size="7"/>
+    <FileStats path="test/com/bank/SkeletonTest.java" bugCount="0" size="13"/>
+    <FileStats path="test/com/bank/TestManager.java" bugCount="0" size="9"/>
+    <PackageStats package="com.bank" total_bugs="7" total_types="2" total_size="63" priority_2="4" priority_1="3">
+      <ClassStats class="com.bank.Account" sourceFile="Account.java" interface="false" size="57" bugs="7" priority_2="4" priority_1="3"/>
+      <ClassStats class="com.bank.Manager" sourceFile="Manager.java" interface="false" size="6" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.company" total_bugs="4" total_types="1" total_size="19" priority_2="2" priority_1="2">
+      <ClassStats class="com.company.HelloWorld" sourceFile="HelloWorld.java" interface="false" size="19" bugs="4" priority_2="2" priority_1="2"/>
+    </PackageStats>
+    <PackageStats package="test.com.bank" total_bugs="1" total_types="8" total_size="113" priority_2="1">
+      <ClassStats class="test.com.bank.AccountTest" sourceFile="AccountTest.java" interface="false" size="28" bugs="0"/>
+      <ClassStats class="test.com.bank.AllJUnitTests" sourceFile="AllJUnitTests.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="test.com.bank.AppTest" sourceFile="AppTest.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="test.com.bank.AppTest4" sourceFile="AppTest4.java" interface="false" size="8" bugs="1" priority_2="1"/>
+      <ClassStats class="test.com.bank.HelloWorldTest" sourceFile="HelloWorldTest.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="test.com.bank.Junit4TestSuite" sourceFile="Junit4TestSuite.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="test.com.bank.SkeletonTest" sourceFile="SkeletonTest.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="test.com.bank.TestManager" sourceFile="TestManager.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="567" invocations="363" avgMicrosecondsPerInvocation="1563" maxMicrosecondsPerInvocation="58419" standardDeviationMircosecondsPerInvocation="5248"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="495" invocations="366" avgMicrosecondsPerInvocation="1354" maxMicrosecondsPerInvocation="192952" standardDeviationMircosecondsPerInvocation="10258"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="463" invocations="109" avgMicrosecondsPerInvocation="4255" maxMicrosecondsPerInvocation="235431" standardDeviationMircosecondsPerInvocation="24040"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="300" invocations="317" avgMicrosecondsPerInvocation="947" maxMicrosecondsPerInvocation="194296" standardDeviationMircosecondsPerInvocation="10917"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="208" invocations="25" avgMicrosecondsPerInvocation="8355" maxMicrosecondsPerInvocation="60519" standardDeviationMircosecondsPerInvocation="15221"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="130" invocations="25" avgMicrosecondsPerInvocation="5204" maxMicrosecondsPerInvocation="33850" standardDeviationMircosecondsPerInvocation="8380"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantPoolGenFactory" totalMilliseconds="124" invocations="11" avgMicrosecondsPerInvocation="11304" maxMicrosecondsPerInvocation="110212" standardDeviationMircosecondsPerInvocation="31365"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="108" invocations="51" avgMicrosecondsPerInvocation="2121" maxMicrosecondsPerInvocation="17392" standardDeviationMircosecondsPerInvocation="3389"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="107" invocations="51" avgMicrosecondsPerInvocation="2108" maxMicrosecondsPerInvocation="23816" standardDeviationMircosecondsPerInvocation="4561"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="107" invocations="25" avgMicrosecondsPerInvocation="4287" maxMicrosecondsPerInvocation="73772" standardDeviationMircosecondsPerInvocation="14421"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="105" invocations="51" avgMicrosecondsPerInvocation="2064" maxMicrosecondsPerInvocation="80534" standardDeviationMircosecondsPerInvocation="11155"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="94" invocations="25" avgMicrosecondsPerInvocation="3786" maxMicrosecondsPerInvocation="32130" standardDeviationMircosecondsPerInvocation="7290"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="94" invocations="48" avgMicrosecondsPerInvocation="1965" maxMicrosecondsPerInvocation="44026" standardDeviationMircosecondsPerInvocation="6705"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="92" invocations="51" avgMicrosecondsPerInvocation="1815" maxMicrosecondsPerInvocation="28081" standardDeviationMircosecondsPerInvocation="4856"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FormatStringChecker" totalMilliseconds="84" invocations="11" avgMicrosecondsPerInvocation="7642" maxMicrosecondsPerInvocation="78576" standardDeviationMircosecondsPerInvocation="22440"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="78" invocations="52" avgMicrosecondsPerInvocation="1505" maxMicrosecondsPerInvocation="21984" standardDeviationMircosecondsPerInvocation="3217"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DefaultEncodingDetector" totalMilliseconds="71" invocations="11" avgMicrosecondsPerInvocation="6534" maxMicrosecondsPerInvocation="60674" standardDeviationMircosecondsPerInvocation="17176"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="70" invocations="52" avgMicrosecondsPerInvocation="1346" maxMicrosecondsPerInvocation="19218" standardDeviationMircosecondsPerInvocation="2892"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindFieldSelfAssignment" totalMilliseconds="68" invocations="11" avgMicrosecondsPerInvocation="6185" maxMicrosecondsPerInvocation="64911" standardDeviationMircosecondsPerInvocation="18576"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildStringPassthruGraph" totalMilliseconds="66" invocations="25" avgMicrosecondsPerInvocation="2676" maxMicrosecondsPerInvocation="46578" standardDeviationMircosecondsPerInvocation="9088"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

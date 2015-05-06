@@ -1,0 +1,342 @@
+<project name="Test_FindBugs" default="coberturaReport" basedir=".">
+	<property name="app.name" value="test" />
+	<property name="build.dir" value="bin" />
+	<property name="source.dir" value="src" />
+	<property name="reports" location="build/reports" />
+	<property name="findbugs.home.dir" value="D:/Jenkins-Training/Installations/findbugs-3.0" />
+	<property name="report.junit.dir" location="${reports}/junit" />
+	<property name="report.findbugs.dir" location="${reports}/findbugs" />
+	<property name="install.home.dir" value="D:/Jenkins-Training/Installations" />
+	<property name="checkstyle.home.dir" location="D:/Jenkins-Training/Installations/checkstyle-5.5" />
+	<property name="cobertura.home.dir" value="D:/Jenkins-Training/Installations/cobertura-1.9.4" />
+	<property name="pmd.home.dir" value="D:/Jenkins-Training/Installations/pmd-bin-5.1" />
+	<property name="htm.dir" location="${basedir}/html" />
+
+
+	<property name="report.checkstyle.dir" location="${reports}/checkstyle" />
+	<property name="report.cobertura.dir" location="${reports}/cobertura" />
+	<property name="report.pmd.dir" location="${reports}/pmd" />
+	<property name="instrumented.dir" location="${basedir}/instrumented" />
+	<property name="report.temp.dir" location="${reports}/temp" />
+	<property name="cobertura.ser.file" location="${report.temp.dir}/cobertura.ser" />
+
+
+
+	<path id="run.classpath">
+		<pathelement path="${build.dir}" />
+		<pathelement path="${basedir}/lib/junit-4.2.jar" />
+	</path>
+
+	<path id="cobertura.classpath">
+		<path refid="run.classpath" />
+		<fileset dir="${cobertura.home.dir}">
+			<include name="cobertura.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	<!--For better all usage put the junit jar in ant/lib directory-->
+	<path id="libraries">
+		<pathelement location="${java.home}/../lib/tools.jar" />
+		<fileset dir="${basedir}/lib">
+			<include name="junit-4.2.jar" />
+		</fileset>
+	</path>
+
+	<path id="pmd.classpath">
+		<pathelement location="${build.dir}" />
+		<fileset dir="${pmd.home.dir}/lib/">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="cobertura.classpath">
+		<path refid="run.classpath" />
+		<fileset dir="${cobertura.home.dir}">
+			<include name="cobertura.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+	<target name="clean" description="Delete all result to start with a clean build.">
+		<delete dir="${reports}" />
+		<delete dir="${report.junit.dir}" />
+		<delete dir="${report.findbugs.dir}" />
+		<delete dir="${report.cobertura.dir}" />
+		<delete dir="${report.checkstyle.dir}" />
+		<delete dir="${report.temp.dir}" />
+		<delete dir="${report.cobertura.dir}" />
+		<delete dir="${report.pmd.dir}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${instrumented.dir}" />
+		<delete dir="${htm.dir}" />
+		<delete dir="${${reports}/batch}" />
+
+		<mkdir dir="${reports}" />
+		<mkdir dir="${report.junit.dir}" />
+		<mkdir dir="${report.findbugs.dir}" />
+		<mkdir dir="${report.checkstyle.dir}" />
+		<mkdir dir="${report.temp.dir}" />
+		<mkdir dir="${report.cobertura.dir}" />
+		<mkdir dir="${report.pmd.dir}" />
+		<mkdir dir="${instrumented.dir}" />
+		<mkdir dir="${htm.dir}" />
+
+	</target>
+
+
+	<target name="compileJava">
+		<mkdir dir="${build.dir}" />
+		<echo message="Compiling Java Domain Source files">
+		</echo>
+		<!-- <javac debug="true"
+            debuglevel="lines, source" srcdir="${source.dir}" destdir="${build.dir}">
+ -->
+ <javac debug="true" srcdir="${source.dir}" destdir="${build.dir}">
+ 
+			<include name="com/bank/*.java" />
+			<include name="com/company/*.java" />
+		</javac>
+	</target>
+
+
+
+	<target name="compiletests" depends="compileJava">
+		<echo message="Compiling Java Test source Classes" />
+
+		<mkdir dir="${build.dir}" />
+		<echo message="Dir build created.." />
+			<javac debug="true" srcdir="${source.dir}/test" destdir="${build.dir}">		 
+			<classpath>				  
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+			</classpath>
+			<include name="com/bank/*.java" />
+		</javac>
+	</target>
+
+
+	<taskdef name="pmdAnalyse" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+
+	<target name="runPMD">
+		<echo message="Running PMD Task" />
+		<pmdAnalyse rulesetfiles="PMD_RuleSets/rules.xml">
+			<formatter type="xml" toFile="${report.pmd.dir}/pmd_report.xml" />
+			<fileset dir="${build.dir}">
+				<include name="**/*.java" />
+			</fileset>
+		</pmdAnalyse>
+		<xslt in="${report.pmd.dir}/pmd_report.xml" style="${pmd.home.dir}/etc/xslt/pmd-report-per-class.xslt" out="${report.pmd.dir}/pmd_report.html" />
+	</target>
+
+	<target name="RunCheckstyle" depends="clean,compiletests,runPMD,runFindbugs" description="Run the Checkstyle to find code convention violations.">
+		<taskdef resource="checkstyletask.properties" classpath="${checkstyle.home.dir}/checkstyle-5.5-all.jar" />
+		<echo message="Running RunCheckstyle Task" />
+
+		<!-- run verification of installation-->
+		<available file="${checkstyle.home.dir}/checkstyle-5.5-all.jar" property="checkstyle.available" />
+		<fail unless="checkstyle.available" message="Error: CHECKSTYLE_HOME not set or checkstyle-5.5-all.jar not found." />
+		<mkdir dir="${report.checkstyle.dir}" />
+
+		<!-- run analysis-->
+		<checkstyle config="${checkstyle.home.dir}/sun_checks.xml" failureProperty="checkstyle.failure" failOnViolation="false">
+			<formatter type="xml" tofile="${report.checkstyle.dir}/checkstyle_report.xml" />
+			<fileset dir="${source.dir}" includes="**/*.java" />
+		</checkstyle>
+
+		<style in="${report.checkstyle.dir}/checkstyle_report.xml" out="${report.checkstyle.dir}/checkstyle_report.html" style="${checkstyle.home.dir}/contrib/checkstyle-noframes.xsl" />
+	</target>
+
+	<target name="runFindbugs" description="Run findbugs code analysis to statically check for problems.">
+		<echo message="Running the findBugs task...." />
+		<!-- Fail this target if FindBugs is not installed. -->
+		<available file="${findbugs.home.dir}/lib/findbugs.jar" property="findbugs.available" />
+		<fail unless="findbugs.available" message="Error: FINDBUGS_HOME not set or findbugs.jar not found." />
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home.dir}/lib/findbugs-ant.jar" />
+
+		<!-- Run FindBugs. -->
+		<findbugs home="${findbugs.home.dir}" workHard="true" output="xml:withMessages" outputFile="${report.findbugs.dir}/findbugs.xml">
+			<class location="${build.dir}" />
+			<auxClasspath>
+				<fileset file="${install.home.dir}/junit-4.2.jar" />
+			</auxClasspath>
+		</findbugs>
+	</target>
+
+
+	<target name="cobertura" description="Instrument the project for code coverage.">
+		<echo message="Running cobertura instrument Task" />
+		 
+		<cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.ser.file}">
+			<ignore regex="org.apache.log4j.*" />
+			<fileset dir="${build.dir}">
+				<include name="**/*.class" />
+				<!--exclude name="**/*Test.class" /-->
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
+	<target name="runJUNIT" depends="RunCheckstyle,cobertura" description="Run all junit test cases.">
+		<echo message="Running junit tesdt Task" />
+
+		<junit printsummary="yes" fork="yes" haltonfailure="no">
+
+			<!-- Specify the name of the coverage data file to use.
+             The value specified here is the default.    -->
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.ser.file}" />
+
+			<!--The classpath order: instrumented classes are before 
+             the original (uninstrumented) classes.  This is important. -->
+			<classpath location="${instrumented.dir}" />
+			<classpath location="${build.dir}" />
+			<classpath location="${basedir}/lib/junit-4.2.jar}" />
+
+			<!-- The instrumented classes reference classes used by the Cobertura runtime, 
+             so Cobertura and its dependencies must be on the classpath. -->
+			<classpath refid="cobertura.classpath" />
+
+			<formatter type="plain" />
+			<formatter type="xml" />
+
+			<batchtest todir="${report.temp.dir}">
+				<fileset dir="${source.dir}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+
+	<target name="junitReport" depends="runJUNIT" description="Create a report for the test results.">
+		<echo message="Running junitReport Task" />
+		 
+		<junitreport todir="${report.junit.dir}">
+			<fileset dir="${report.temp.dir}">
+				<include name="*.xml" />
+			</fileset>
+			<report format="frames" todir="${report.junit.dir}" />
+		</junitreport>
+	</target>
+
+	<target name=" findbugsReport" depends="junitReport" description="Generate a report on error analysis by findbugs.">
+		<echo message="Running findbugsReport Task" />
+		<xslt in="${report.findbugs.dir}/findbugs.xml" style="${findbugs.home.dir}/src/xsl/fancy.xsl" out="${report.findbugs.dir}/findbugs-default.html" />
+	</target>
+
+
+	<target name="coberturaReport" depends="junitReport" description="Generate an HTML report on Cobertura coverage.">
+		<echo message="Running Cobertura Report" />
+		<!--cobertura-report format="html" datafile="${cobertura.ser.file}" destdir="${report.cobertura.dir}"-->
+				
+		<cobertura-report format="xml" datafile="${cobertura.ser.file}" destdir="${report.cobertura.dir}">
+			<!-- <fileset dir="${source.dir}">
+				<include name="**/*.java" />
+			</fileset> -->
+			<fileset dir="${build.dir}">
+				<include name="**/*.class" />
+				<!--exclude name="**/*Test.class" /-->
+			</fileset>
+		</cobertura-report>
+	</target>
+
+
+	<target name="JunitSingleTest" depends="compiletests">
+		<echo message="Running the JunitSingleTest Target..">
+		</echo>
+		<junit printsummary="yes" fork="yes" haltonfailure="yes" showoutput="yes">
+
+			<classpath>
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+
+				<pathelement location="${build.dir}" />
+
+				<pathelement path="" />
+
+			</classpath>
+
+			<test name="test.com.bank.AllJUnitTests" />
+		</junit>
+
+	</target>
+
+
+
+	<target name="AllTests" depends="compiletests">
+		<echo message="Running the Junit All Tests.." />
+		<mkdir dir="${report.junit.dir}" />
+
+		<junit printsummary="yes" fork="yes" haltonfailure="yes" showoutput="yes" haltonerror="yes">
+			<classpath>
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+
+				<pathelement location="bin" />
+				<pathelement path="" />
+				<pathelement path="${java.class.path}" />
+			</classpath>
+
+			<test name="test.com.bank.AllJUnitTests" haltonfailure="false" outfile="test-result" todir="${report.junit.dir}">
+				<formatter type="xml" />
+			</test>
+
+		</junit>
+	</target>
+
+	<target name="gen-report" depends="AllTests">
+		<junitreport todir="${reports}/html">
+			<fileset dir="${report.junit.dir}">
+				<include name="test-result.xml" />
+			</fileset>
+			<report format="frames" todir="${reports}/html" />
+		</junitreport>
+	</target>
+
+	<target name="Gen_Report_Styled" depends="AllTests">
+		<junitreport todir="${reports}/custom">
+			<fileset dir="${report.junit.dir}">
+				<include name="test-result.xml" />
+			</fileset>
+			<report todir="${reports}/custom" styledir="styles" format="frames">
+				<!--param name="key1" expression="value1"/>
+	               <param name="key2" expression="value2"/-->
+			</report>
+		</junitreport>
+	</target>
+
+	<target name="BatchTest" description="run the batch test and generate xml outputs of test results">
+		<echo message="Running the Junit BatchTest.." />
+		<mkdir dir="${report.junit.dir}" />
+
+		<junit printsummary="yes" haltonfailure="yes" haltonerror="yes" showoutput="yes">
+			<classpath>
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+
+				<pathelement location="bin" />
+			</classpath>
+
+			<batchtest fork="yes" todir="${report.junit.dir}">
+				<formatter type="xml" />
+				<fileset dir="bin">
+					<!--Specify the java files with package test-->
+					<include name="/test/com/bank/*.*" />
+				</fileset>
+
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="BatchTest_Report" depends="BatchTest">
+		<junitreport todir="${report.junit.dir}">
+			<fileset dir="${report.junit.dir}">
+				<include name="*.xml" />
+			</fileset>
+			<report todir="${reports}/batch" styledir="styles" format="frames">
+				<!--param name="key1" expression="value1"/>
+		               <param name="key2" expression="value2"/-->
+			</report>
+		</junitreport>
+	</target>
+
+
+
+
+</project>
+

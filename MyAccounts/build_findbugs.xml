@@ -1,0 +1,178 @@
+<project name="Test_FindBugs" default="runFindbugs" basedir=".">
+	<property name="app.name" value="test" />
+	<property name="build.dir" value="bin" />
+	<property name="source.dir" value="src" />
+	<property name="reports" location="build/reports"/>
+	<property name="findbugs.home.dir" value="D:/Jenkins-Training/Installations/findbugs-3.0"/>
+    <property name="report.findbugs.dir" location="${reports}/findbugs" />
+    <property name="install.home.dir" value="D:/Jenkins-Training/Installations" />
+    	
+
+<!--For better all usage put the junit jar in ant/lib directory-->
+	<path id="libraries">
+		<pathelement location="${java.home}/../lib/tools.jar" />
+		<fileset dir="${basedir}/lib">
+			<include name="junit-4.2.jar"/>
+		</fileset>
+	</path>	
+
+
+
+	<target name="compileJava">
+		<mkdir dir="${build.dir}" />
+		<echo message="Compiling Java Domain Source files">
+		</echo>
+		<javac srcdir="${source.dir}" destdir="${build.dir}">
+
+			<include name="com/bank/*.java" />
+			<include name="com/company/*.java" />
+		</javac>
+	</target>
+
+
+
+	<target name="compiletests" depends="compileJava">
+		<echo message="Compiling Java Test source Classes"/>		
+		 
+		<mkdir dir="${build.dir}" />
+		<echo message="Dir build created.."/>
+		<javac srcdir="src/test" destdir="${build.dir}">
+			<classpath>				  
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+			</classpath>
+			<include name="com/bank/*.java" />
+		</javac>
+	</target>
+
+	<target name="runFindbugs"
+	            depends="BatchTest"
+	            description="Run findbugs code analysis to statically check for problems."
+	    >
+			<echo message="Running the findBugs task...."/>
+	        <!-- Fail this target if FindBugs is not installed. -->
+	        <available file="${findbugs.home.dir}/lib/findbugs.jar" property="findbugs.available" />
+	        <fail unless="findbugs.available"
+	              message="Error: FINDBUGS_HOME not set or findbugs.jar not found."
+	        />
+	        <taskdef name="findbugs"
+	                 classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+	                 classpath="${findbugs.home.dir}/lib/findbugs-ant.jar"
+	        />
+
+	        <!-- Run FindBugs. -->
+	        <mkdir dir="${report.findbugs.dir}" />
+	        <findbugs home="${findbugs.home.dir}"
+	                  workHard="true"	
+	        	      output="xml:withMessages"	
+	                  outputFile="${report.findbugs.dir}/findbugs.xml" >
+	            <class location="${build.dir}/com/bank/Account.class" />
+	            <auxClasspath>
+	                <fileset file="${basedir}/lib/junit-4.2.jar"/>
+	            </auxClasspath>
+	        </findbugs>
+	    </target>
+
+	                	  
+
+	<target name="JunitSingleTest" depends="compiletests">
+		<echo message="Running the JunitSingleTest Target..">
+		</echo>
+		<junit printsummary="yes" fork="yes" haltonfailure="yes" showoutput="yes">
+
+			<classpath>
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+				
+				<pathelement location="${build.dir}" />
+
+				<pathelement path="" />
+
+			</classpath>
+
+			<test name="test.com.bank.AllJUnitTests" />		 
+		</junit>
+
+	</target>
+
+	 
+
+	<target name="AllTests" depends="compiletests">
+		<echo message="Running the Junit All Tests.."/>
+		<mkdir dir="${reports}" />
+		
+		<junit printsummary="yes" fork="yes" haltonfailure="yes" showoutput="yes" 
+		haltonerror="yes" >
+			<classpath>
+				<pathelement location="${basedir}/lib/junit-4.2.jar" />
+				
+				<pathelement location="bin" />
+				<pathelement path="" />
+				<pathelement path="${java.class.path}" />
+			</classpath>
+			 
+			<test name="test.com.bank.AllJUnitTests" haltonfailure="false" outfile="test-result" 
+				todir="${reports}">
+			     <formatter type="xml"/> 
+			 </test>      
+			  
+		</junit>
+	</target>
+	
+	<target name ="gen-report" depends="AllTests">
+			<junitreport  todir="${reports}">
+			  <fileset dir="${reports}">
+			    <include name="test-result.xml"/>
+			  </fileset>
+			  <report format="frames" todir="${reports}/html"/>
+			</junitreport>
+	  </target>
+	
+	<target name ="Gen_Report_Styled" depends="AllTests">
+			<junitreport todir="${reports}">
+			  <fileset dir="${reports}">
+			    <include name="test-result.xml"/>
+			  </fileset>
+			  <report todir="${reports}/custom"   styledir="styles"   format="frames">
+	               <!--param name="key1" expression="value1"/>
+	               <param name="key2" expression="value2"/-->
+	               </report>
+			</junitreport>
+	  </target>
+	
+	<target name="BatchTest" depends="compiletests" description="run the batch test and generate xml outputs of test results" >
+		   <echo message="Running the Junit BatchTest.."/>
+		   <mkdir dir="${reports}/raw" />
+				
+			<junit printsummary="yes" haltonfailure="yes" haltonerror="yes" showoutput="yes" >
+				<classpath>
+					<pathelement location="${basedir}/lib/junit-4.2.jar" />										 
+						<pathelement location="bin" />	                      
+	                 </classpath>  	                                
+			
+	 		  <batchtest fork="yes" todir="${reports}/raw">
+	 		   	<formatter type="xml"/>
+			    <fileset dir="bin">
+	                 <!--Specify the java files with package test-->
+			      <include name="/test/com/bank/*.*"/>
+			    </fileset>
+
+			  </batchtest>
+			</junit>	
+		</target>
+	
+	<target name ="BatchTest_Report" depends="BatchTest">
+				<junitreport todir="${reports}/raw">
+				  <fileset dir="${reports}/raw">
+				    <include name="*.xml"/>
+				  </fileset>
+				  <report todir="${reports}/batch"   styledir="styles"   format="frames">
+		               <!--param name="key1" expression="value1"/>
+		               <param name="key2" expression="value2"/-->
+		               </report>
+				</junitreport>
+		  </target>
+
+
+
+
+</project>
+

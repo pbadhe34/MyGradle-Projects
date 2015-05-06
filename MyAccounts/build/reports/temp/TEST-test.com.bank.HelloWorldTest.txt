@@ -1,0 +1,45 @@
+Testsuite: test.com.bank.HelloWorldTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0 sec
+
+	Caused an ERROR
+Expecting a stackmap frame at branch target 88
+Exception Details:
+  Location:
+    test/com/bank/HelloWorldTest.testSayHello()V @41: ifne
+  Reason:
+    Expected stackmap frame at this location.
+  Bytecode:
+    0x0000000: 033c 11ff ff3d 120d 1100 21b8 0013 bb00
+    0x0000010: 3b59 b700 3d4e 120d 1100 22b8 0013 b200
+    0x0000020: 3f11 0022 3c11 0000 3d9a 002f 120d 1b1c
+    0x0000030: 04b8 0043 11ff ff3d 2d11 0022 3c11 0001
+    0x0000040: 3dc7 0017 120d 1b1c 04b8 0043 11ff ff3d
+    0x0000050: bb00 4559 b700 46bf 1c9b 000f 120d 1b1c
+    0x0000060: 03b8 0043 11ff ff3d 120d 1100 23b8 0013
+    0x0000070: 1248 2db6 004c b800 5012 0d11 0024 b800
+    0x0000080: 13b1                                   
+  Stackmap Table:
+    append_frame(@112,Object[#59])
+
+java.lang.VerifyError: Expecting a stackmap frame at branch target 88
+Exception Details:
+  Location:
+    test/com/bank/HelloWorldTest.testSayHello()V @41: ifne
+  Reason:
+    Expected stackmap frame at this location.
+  Bytecode:
+    0x0000000: 033c 11ff ff3d 120d 1100 21b8 0013 bb00
+    0x0000010: 3b59 b700 3d4e 120d 1100 22b8 0013 b200
+    0x0000020: 3f11 0022 3c11 0000 3d9a 002f 120d 1b1c
+    0x0000030: 04b8 0043 11ff ff3d 2d11 0022 3c11 0001
+    0x0000040: 3dc7 0017 120d 1b1c 04b8 0043 11ff ff3d
+    0x0000050: bb00 4559 b700 46bf 1c9b 000f 120d 1b1c
+    0x0000060: 03b8 0043 11ff ff3d 120d 1100 23b8 0013
+    0x0000070: 1248 2db6 004c b800 5012 0d11 0024 b800
+    0x0000080: 13b1                                   
+  Stackmap Table:
+    append_frame(@112,Object[#59])
+
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:260)
+
